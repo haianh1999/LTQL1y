@@ -30,17 +30,21 @@ namespace LTQL11.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            //tim kiem person theo id duoc gui len
             Person person = db.Persons.Find(id);
             if (person == null)
             {
+                //tra ve trang not found neu ko tim thay du lieu
                 return HttpNotFound();
             }
+            // neu tim thay du lieu tra ve view kem theo thông tin person
             return View(person);
         }
 
         // GET: People/Create
         public ActionResult Create()
         {
+            //tra ve view de cho ng dug nhap thong tin
             return View();
         }
 
@@ -48,6 +52,7 @@ namespace LTQL11.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        // quan ly phien lam viec giua client va sever
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "PersonID,PersonName")] Person person)
         {
