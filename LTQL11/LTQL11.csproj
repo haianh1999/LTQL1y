@@ -128,6 +128,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PeopleController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
@@ -147,8 +148,13 @@
     <Compile Include="Migrations\202109230849482_create_table_person.Designer.cs">
       <DependentUpon>202109230849482_create_table_person.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202109231603577_create_table_employee.cs" />
+    <Compile Include="Migrations\202109231603577_create_table_employee.Designer.cs">
+      <DependentUpon>202109231603577_create_table_employee.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\LaptrinhquanlyDBcontext.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Student.cs" />
@@ -202,6 +208,11 @@
     <Content Include="Views\People\Index.cshtml" />
     <Content Include="Views\Students\Index.cshtml" />
     <Content Include="Views\Students\Create.cshtml" />
+    <Content Include="Views\Employees\Create.cshtml" />
+    <Content Include="Views\Employees\Delete.cshtml" />
+    <Content Include="Views\Employees\Details.cshtml" />
+    <Content Include="Views\Employees\Edit.cshtml" />
+    <Content Include="Views\Employees\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -228,6 +239,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202109230849482_create_table_person.resx">
       <DependentUpon>202109230849482_create_table_person.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109231603577_create_table_employee.resx">
+      <DependentUpon>202109231603577_create_table_employee.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
