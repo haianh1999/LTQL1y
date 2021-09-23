@@ -13,10 +13,12 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.StudentName)
+            <label>Student ID</label>
+        <th>
+            <label>Student Name</label>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Address)
+            <label>Student Address</label>
         </th>
         <th></th>
     </tr>
@@ -30,6 +32,7 @@
             @Html.DisplayFor(modelItem => item.Address)
         </td>
         <td>
+            <a href="~/Student/Edit@item.StudentID"></a>
             @Html.ActionLink("Edit", "Edit", new { id=item.StudentID }) |
             @Html.ActionLink("Details", "Details", new { id=item.StudentID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.StudentID })

@@ -16,5 +16,23 @@ namespace LTQL11.Controllers
             var model = db.Students.ToList();
             return View(model);
         }
+        //tao action create tra ve vuew cho phep ng dung nhap thong tin de them moi
+        public ActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Student std)
+        {
+            if(ModelState.IsValid)
+            {
+                db.Students.Add(std);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
     }
+
 }
