@@ -14,6 +14,7 @@ namespace LTQL11.Controllers
     {
         //khai bao dbcontext de lam viec voi database
         private LaptrinhquanlyDBcontext db = new LaptrinhquanlyDBcontext();
+        AutogenerateKey auKey = new AutogenerateKey();
 
         // GET: People
         public ActionResult Index()
@@ -44,6 +45,20 @@ namespace LTQL11.Controllers
         // GET: People/Create
         public ActionResult Create()
         {
+            string NewID = "";
+            var ps = db.Persons.ToList().OrderByDescending(c => c.PersonID);
+            var countPS = db.Persons.Count();
+
+            if (countPS == 0)
+            {
+                NewID = "PS001";
+            }
+            else
+            {
+                NewID = auKey.GenerateKey(ps.FirstOrDefault().PersonID);
+            }
+            ViewBag.newPerID = NewID;
+
             //tra ve view de cho ng dug nhap thong tin
             return View();
         }
@@ -55,7 +70,7 @@ namespace LTQL11.Controllers
         // quan ly phien lam viec giua client va sever
         [ValidateAntiForgeryToken]
         // nhan gia tri cac thuoc tinh tu client gui len
-        public ActionResult Create([Bind(Include = "PersonID,PersonName")] Person person)
+        public ActionResult Create( Person person)
         {
             //neu thoa man du lieu rang buoc
             if (ModelState.IsValid)
@@ -74,16 +89,8 @@ namespace LTQL11.Controllers
         // GET: People/Edit/5
         public ActionResult Edit(string id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Person person = db.Persons.Find(id);
-            if (person == null)
-            {
-                return HttpNotFound();
-            }
-            return View(person);
+            var ps = db.Persons.Select(p => p).Where(p => p.PersonID == id).FirstOrDefault();
+            return View(ps);
         }
 
         // POST: People/Edit/5
@@ -91,16 +98,24 @@ namespace LTQL11.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PersonID,PersonName")] Person person)
+        public ActionResult Edit( Person person)
         {
             if (ModelState.IsValid)
             {
-                //thuc hien cap nhap
-                db.Entry(person).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    var pse = db.Persons.Select(p => p).Where(p => p.PersonID == person.PersonID).FirstOrDefault();
+                    pse.Address = person.Address;
+                    pse.PersonName = person.PersonName;
+
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return View();
+                }
             }
-            return View(person);
         }
 
         // GET: People/Delete/5

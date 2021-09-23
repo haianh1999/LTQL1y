@@ -13,6 +13,7 @@ namespace LTQL11.Controllers
     public class EmployeesController : Controller
     {
         private LaptrinhquanlyDBcontext db = new LaptrinhquanlyDBcontext();
+        AutogenerateKey auKey = new AutogenerateKey();
 
         // GET: Employees
         public ActionResult Index()
@@ -38,6 +39,19 @@ namespace LTQL11.Controllers
         // GET: Employees/Create
         public ActionResult Create()
         {
+            string NewID = "";
+            var emp = db.Persons.ToList().OrderByDescending(c => c.PersonID);
+            var countEmployee = db.Persons.Count();
+
+            if (countEmployee == 0)
+            {
+                NewID = "PS001";
+            }
+            else
+            {
+                NewID = auKey.GenerateKey(emp.FirstOrDefault().PersonID);
+            }
+            ViewBag.newPerID = NewID;
             return View();
         }
 
@@ -46,7 +60,7 @@ namespace LTQL11.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PersonID,PersonName,Company,Address")] Employee employee)
+        public ActionResult Create( Employee employee)
         {
             if (ModelState.IsValid)
             {

@@ -154,6 +154,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\AutogenerateKey.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\LaptrinhquanlyDBcontext.cs" />
     <Compile Include="Models\Person.cs" />
