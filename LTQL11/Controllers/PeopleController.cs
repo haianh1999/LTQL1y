@@ -12,17 +12,20 @@ namespace LTQL11.Controllers
 {
     public class PeopleController : Controller
     {
+        //khai bao dbcontext de lam viec voi database
         private LaptrinhquanlyDBcontext db = new LaptrinhquanlyDBcontext();
 
         // GET: People
         public ActionResult Index()
         {
+            //tra ve view index kem theo list danh sach pesron trong database
             return View(db.Persons.ToList());
         }
 
         // GET: People/Details/5
         public ActionResult Details(string id)
         {
+            // neu id chuyen vao=null thi tra ve trang loi
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
