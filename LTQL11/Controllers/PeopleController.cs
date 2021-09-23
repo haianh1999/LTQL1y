@@ -54,15 +54,20 @@ namespace LTQL11.Controllers
         [HttpPost]
         // quan ly phien lam viec giua client va sever
         [ValidateAntiForgeryToken]
+        // nhan gia tri cac thuoc tinh tu client gui len
         public ActionResult Create([Bind(Include = "PersonID,PersonName")] Person person)
         {
+            //neu thoa man du lieu rang buoc
             if (ModelState.IsValid)
             {
+                // add doi tượng gửi lên tu phia client va dbcontext
                 db.Persons.Add(person);
+                //luu thay doi vao database
                 db.SaveChanges();
+                //dieu huong ve action index
                 return RedirectToAction("Index");
             }
-
+            //giu nguyen view create kem thông bao loi
             return View(person);
         }
 
@@ -90,6 +95,7 @@ namespace LTQL11.Controllers
         {
             if (ModelState.IsValid)
             {
+                //thuc hien cap nhap
                 db.Entry(person).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
