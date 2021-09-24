@@ -102,20 +102,11 @@ namespace LTQL11.Controllers
         {
             if (ModelState.IsValid)
             {
-                try
-                {
-                    var pse = db.Persons.Select(p => p).Where(p => p.PersonID == person.PersonID).FirstOrDefault();
-                    pse.Address = person.Address;
-                    pse.PersonName = person.PersonName;
-
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-                catch
-                {
-                    return View();
-                }
+                db.Entry(person).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
+                    return View();
         }
 
         // GET: People/Delete/5
