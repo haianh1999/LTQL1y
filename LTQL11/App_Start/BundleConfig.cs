@@ -10,9 +10,10 @@ namespace LTQL11
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
-
+            bundles.Add(new ScriptBundle("~/bundles/ckEditor").Include(
+                       "~/Scripts/ckEditor/ckEditor.js"));
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+                       "~/Scripts/jquery.validate*"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
@@ -28,8 +29,8 @@ namespace LTQL11
                       "~/content/W3.css"));
             bundles.Add(new StyleBundle("~/Content/W3css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css",
-                      "~/content/W3.css"));
+                      "~/Content/site.css"
+                      ));
         }
     }
 }
