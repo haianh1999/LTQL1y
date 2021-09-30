@@ -11,10 +11,12 @@ namespace LTQL11.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Web.Mvc;
+
     public partial class Person
     {
         public string PersonID { get; set; }
+        [AllowHtml]
         public string PersonName { get; set; }
         public string Company { get; set; }
         public string Address { get; set; }
