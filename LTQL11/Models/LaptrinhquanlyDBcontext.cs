@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace LTQL11.Models
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<Person> Persons { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
-
+       
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Account>()

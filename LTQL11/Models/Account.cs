@@ -11,9 +11,13 @@ namespace LTQL11.Models
     {
         [Key]
         [StringLength(50)]
+        [Required(ErrorMessage = "User name is required")]
         public string Usename { get; set; }
+        [Required(ErrorMessage = "User name is required")]
+        [DataType(DataType.Password)]
 
         [StringLength(50)]
         public string Password { get; set; }
+        public object UserName { get; internal set; }
     }
 }
