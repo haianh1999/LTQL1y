@@ -10,7 +10,7 @@ namespace LTQL11.Models
     {
         public string PasswordEncrytion(string pass)
         {
-            return FormsAuthentication.HashPasswordForStoringInConfigFile(pass.Trim(), "MDS");
+            return FormsAuthentication.HashPasswordForStoringInConfigFile(pass.Trim(), "MD5");
         }
     }
 }

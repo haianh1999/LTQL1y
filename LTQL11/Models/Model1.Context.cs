@@ -26,6 +26,5 @@ namespace LTQL11.Models
         }
     
         public virtual DbSet<Person> People { get; set; }
-        public object Account { get; internal set; }
     }
 }
