@@ -12,6 +12,11 @@ namespace LTQL11.Controllers
     {
         Encrytion encry = new Encrytion();
         private LaptrinhquanlyDBcontext db = new LaptrinhquanlyDBcontext();
+        private readonly object strPro;
+
+        public object ecry { get; private set; }
+        public object StrPro { get; private set; }
+
         // GET: Account
         public ActionResult Register()
         {
@@ -33,8 +38,14 @@ namespace LTQL11.Controllers
             return View(acc);
         }
         [HttpGet]
-        public ActionResult Login()
+        [AllowAnonymous]
+        public ActionResult Login(string returnUrl)
         {
+            if (CheckSession() == 1)
+            {
+                return RedirectToAction("Index", "HomeAdmin", new { Area = "Admins" });
+            }
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
         [HttpPost]
@@ -65,6 +76,37 @@ namespace LTQL11.Controllers
             return RedirectToAction("Index", "Home");
 
         }
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult Login(Account acc, string returnUrl)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty((string)acc.UserName) && !string.IsNullOrEmpty(acc.Password))
+                {
+                    using (var db = new LaptrinhquanlyDBcontext())
+                    {
+                        var passToMD5 = strPro.PasswordEncrytion(acc.PassWord);
+                        var account = db.Accounts.Where(m => m.UserName.Equals(acc.UserName) && m.Password.Equals(passToMD5)).Count();
+                        if (account == 1)
+                        {
+                            FormsAuthentication.SetAuthCookie((string)acc.UserName, false);
+                            Session["idUser"] = acc.UserName;
+                            Session["roleUser"] = acc.RoleID;
+                            return RedirectToLocal(returnUrl);
+                        }
+                        ModelState.AddModelError("", "Thông tin đăng nhập chưa chính xác");
+                    }
+                }
+
+                ModelState.AddModelError("", "Username and password is required.");
+            }
+            catch
+            {
+                ModelState.AddModelError("", "Hệ thống đang được bảo trì, vui lòng liên hệ với quản trị viên");
+            }
+            return View(acc);
+        }
         private ActionResult RedirectToLocal(string returnUrl)
         {
           if (Url.IsLocalUrl(returnUrl))
@@ -75,6 +117,35 @@ namespace LTQL11.Controllers
           {
              return RedirectToAction("Index", "Home");
           }
+        }
+        //Kiểm tra người dùng đăng nhập quyền gì
+        private int CheckSession()
+        {
+            using (var db = new LaptrinhquanlyDBcontext())
+            {
+                var user = HttpContext.Session["idUser"];
+
+                if (user != null)
+                {
+                    var role = db.Accounts.Find(user.ToString()).RoleID;
+
+                    if (role != null)
+                    {
+                        if (role.ToString() == "Admin")
+
+                        {
+                            return 1;
+                        }
+
+                        else if (role.ToString() == "nv")
+
+                        {
+                            return 2;
+                        }
+                    }
+                }
+            }
+            return 0;
         }
     }
 }

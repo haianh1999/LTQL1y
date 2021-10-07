@@ -7,13 +7,13 @@ namespace LTQL11.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class create_table_person : IMigrationMetadata
+    public sealed partial class userole : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(create_table_person));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(userole));
         
         string IMigrationMetadata.Id
         {
-            get { return "202109230849482_create_table_person"; }
+            get { return "202110071545206_userole"; }
         }
         
         string IMigrationMetadata.Source

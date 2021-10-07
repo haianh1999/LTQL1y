@@ -5,7 +5,7 @@ using System.Web;
 
 namespace LTQL11.Models
 {
-    public class Employee: Person
+    public class Employee
     {
         public string Company { get; set; }
         public string Address { get; set; }

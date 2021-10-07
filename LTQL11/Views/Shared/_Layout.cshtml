@@ -24,13 +24,12 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "Index", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Person", "Index", "Person")</li>
                     <li>@Html.ActionLink("Employees", "Index", "Employees")</li>
-                    <li>@Html.ActionLink("Person1", "Index", "Person1")</li>
-                    <li>@Html.ActionLink("Register", "Register", "Account")</li>
-                    <li>@Html.ActionLink("Login", "Login", "Account")</li>
-                    <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
-                    <li>@Html.ActionLink("Đăng xuất", "Logoff", "Account")</li>
+                    <li>@Html.ActionLink("Register", "Register", "Account", new { Area = "" }, null)</li>
+                    <li>@Html.ActionLink("Login", "Login", "Account", new { Area = "" }, null)</li>
+                    <li>@Html.ActionLink("Logout", "Logout", "Account", new { Area = "" }, null)</li>
+                    <li>@Html.ActionLink("Role", "Index", "Roles")</li>
+
                 </ul>
             </div>
         </div>
