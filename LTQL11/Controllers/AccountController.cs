@@ -12,10 +12,9 @@ namespace LTQL11.Controllers
     {
         Encrytion encry = new Encrytion();
         private LaptrinhquanlyDBcontext db = new LaptrinhquanlyDBcontext();
-        private readonly object strPro;
+        StringProcess strPro = new StringProcess();
+        private string encrytionpass;
 
-        public object ecry { get; private set; }
-        public object StrPro { get; private set; }
 
         // GET: Account
         public ActionResult Register()
@@ -40,13 +39,23 @@ namespace LTQL11.Controllers
         [HttpGet]
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
+
         {
             if (CheckSession() == 1)
+
             {
+
                 return RedirectToAction("Index", "HomeAdmin", new { Area = "Admins" });
+            }
+            else if (CheckSession() == 2)
+
+            {
+                return RedirectToAction("Index", "HomeEmp", new { Area = "Employees" });
+
             }
             ViewBag.ReturnUrl = returnUrl;
             return View();
+
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -55,7 +64,7 @@ namespace LTQL11.Controllers
         {
             if (ModelState.IsValid)
             {
-                string encrytionpass = encry.PasswordEncrytion(acc.Password);
+                var passToMD5 = strPro.GetMD5((string)acc.PassWord);
                 var model = db.Accounts.Where(m => m.UserName == acc.UserName && m.Password == encrytionpass).ToList().Count();
                 //thông tin đăng nhập chính xác
                 if (model == 1)
@@ -86,7 +95,8 @@ namespace LTQL11.Controllers
                 {
                     using (var db = new LaptrinhquanlyDBcontext())
                     {
-                        var passToMD5 = strPro.PasswordEncrytion(acc.PassWord);
+                        object ecry = null;
+                        var passToMD5 = strPro.GetMD5((string)acc.PassWord);
                         var account = db.Accounts.Where(m => m.UserName.Equals(acc.UserName) && m.Password.Equals(passToMD5)).Count();
                         if (account == 1)
                         {
