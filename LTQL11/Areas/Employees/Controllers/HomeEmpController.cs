@@ -4,12 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace LTQL11.Areas.Admin.Controllers
+namespace LTQL11.Areas.Employees.Controllers
 {
-    public class HomeAdminController : Controller
+    public class HomeEmpController : Controller
     {
-        [Authorize(Roles = "Admin")]
-        // GET: Admin/HomeAdmin
+        [Authorize(Roles ="NV")]
+        // GET: Employees/HomeEmp
         public ActionResult Index()
         {
             return View();

@@ -103,7 +103,7 @@ namespace LTQL11.Controllers
                             FormsAuthentication.SetAuthCookie((string)acc.UserName, false);
                             Session["idUser"] = acc.UserName;
                             Session["roleUser"] = acc.RoleID;
-                            return RedirectToLocal(returnUrl);
+                            return RedirectTolocal(returnUrl);
                         }
                         ModelState.AddModelError("", "Thông tin đăng nhập chưa chính xác");
                     }
@@ -117,16 +117,27 @@ namespace LTQL11.Controllers
             }
             return View(acc);
         }
-        private ActionResult RedirectToLocal(string returnUrl)
+        private ActionResult RedirectTolocal(string returnUrl)
         {
-          if (Url.IsLocalUrl(returnUrl))
-          {
-               return Redirect(returnUrl);
-          }
-          else
-          {
-             return RedirectToAction("Index", "Home");
-          }
+            if (string.IsNullOrEmpty(returnUrl) || returnUrl == "/")
+            {
+                if (CheckSession() == 1)
+                {
+                    return RedirectToAction("Index", "HomeAdmin", new { Area = "Admins" });
+                }
+                else if (CheckSession() == 2)
+                {
+                    return RedirectToAction("Index", "HomeEmp", new { Area = "Employees" });
+                }
+            }
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
         //Kiểm tra người dùng đăng nhập quyền gì
         private int CheckSession()
